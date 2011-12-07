@@ -2,7 +2,7 @@ maintainer       "Riot Games"
 maintainer_email "jwinsor@riotgames.com"
 license          "Apache 2.0"
 description      "Installs and configures rbenv"
-version          "0.9.0"
+version          "0.9.1"
 
 %w{ centos redhat fedora }.each do |os|
   depends os
