@@ -45,7 +45,7 @@ class Chef
         out = rbenv_command("prefix", :env => { 'RBENV_VERSION' => version })
 
         unless out.exitstatus == 0
-          raise Chef::Exceptions::ShellCommandFailed, out.stderr + "\n" + format_for_exception
+          raise Chef::Exceptions::ShellCommandFailed, "\n" + out.format_for_exception
         end
 
         prefix = out.stdout.chomp
