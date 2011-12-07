@@ -60,9 +60,7 @@ force        | install even if this version is already present (reinstall) |
 
 ##### Installing Ruby 1.9.2-p290
 
-    rbenv_ruby "1.9.2-p290" do
-      ruby_version "1.9.2-p290"
-    end
+    rbenv_ruby "1.9.2-p290"
 
 ##### Forcefully install Ruby 1.9.3-p0
 
