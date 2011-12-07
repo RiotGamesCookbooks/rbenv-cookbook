@@ -28,7 +28,11 @@ action :install do
     
     start_time = Time.now
     
-    rbenv_command("install #{@ruby.name}")
+    out = rbenv_command("install #{@ruby.name}")
+
+    unless out.exitstatus == 0
+      raise Chef::Exceptions::ShellCommandFailed, "\n" + out.format_for_exception
+    end
 
     Chef::Log.debug("rbenv_ruby[#{@ruby.name}] build time was #{(Time.now - start_time)/60.0} minutes.")
   end
