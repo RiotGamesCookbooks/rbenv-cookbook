@@ -29,7 +29,7 @@ Installs and manages your versions of Ruby and Gems in Chef with rbenv and ruby_
 
 ## default
 
-Runs `recipe[rbenv::system_install]`
+Delegates to `recipe[rbenv::system_install]`
 
 ## system_install
 
