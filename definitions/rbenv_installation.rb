@@ -57,7 +57,7 @@ define :rbenv_installation,
 
   template "/etc/profile.d/rbenv.sh" do
     source "rbenv.sh.erb"
-    mode "0755"
+    mode "0644"
     variables(
       :rbenv_root => params[:rbenv_root],
       :ruby_build_bin_path => params[:ruby_build_bin_path]
