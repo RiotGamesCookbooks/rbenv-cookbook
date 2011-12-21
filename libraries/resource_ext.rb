@@ -21,6 +21,16 @@
 require 'chef/mixin/shell_out'
 
 class Chef
+  module Mixin
+    module Rbenv
+      # stub to satisfy EnvironmentHelpers (library load order not guarenteed)
+    end
+
+    module RubyBuild
+      # stub to satisfy EnvironmentHelpers (library load order not guarenteed)
+    end
+  end
+
   module Rbenv
     module ResourceExt
       include Chef::Mixin::Rbenv
