@@ -18,19 +18,12 @@
 # limitations under the License.
 #
 
+$:.push File.expand_path("../", __FILE__)
 require 'chef/mixin/shell_out'
+require 'mixin_rbenv'
+require 'mixin_ruby_build'
 
 class Chef
-  module Mixin
-    module Rbenv
-      # stub to satisfy EnvironmentHelpers (library load order not guarenteed)
-    end
-
-    module RubyBuild
-      # stub to satisfy EnvironmentHelpers (library load order not guarenteed)
-    end
-  end
-
   module Rbenv
     module ResourceExt
       include Chef::Mixin::Rbenv
