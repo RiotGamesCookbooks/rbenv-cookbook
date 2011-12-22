@@ -18,6 +18,9 @@
 # limitations under the License.
 #
 
+$:.push File.expand_path("../", __FILE__)
+require 'chef/mixin/rbenv'
+
 class Chef
   class Provider
     class Package

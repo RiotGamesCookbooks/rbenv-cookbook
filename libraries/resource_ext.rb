@@ -20,8 +20,8 @@
 
 $:.push File.expand_path("../", __FILE__)
 require 'chef/mixin/shell_out'
-require 'mixin_rbenv'
-require 'mixin_ruby_build'
+require 'chef/mixin/rbenv'
+require 'chef/mixin/ruby_build'
 
 class Chef
   module Rbenv
