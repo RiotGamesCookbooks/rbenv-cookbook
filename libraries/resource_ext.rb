@@ -30,11 +30,9 @@ class Chef
       include Chef::Mixin::RubyBuild
       include Chef::Mixin::ShellOut
 
-      def latest_ruby_build_version
+      def desired_ruby_build_version?
         if File.exists?("#{ruby_build_binary_path}")
-          Proc.new do
-            ruby_build_installed_verison.match(/#{node[:ruby_build][:version]}$/).nil?
-          end
+          ruby_build_installed_verison.match(/#{node[:ruby_build][:version]}$/).nil? ? false : true
         else
           false
         end
