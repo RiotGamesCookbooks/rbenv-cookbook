@@ -32,5 +32,5 @@ bash "install_ruby_build" do
     ./install.sh
   EOH
   environment 'PREFIX' => node[:ruby_build][:prefix]
-  not_if latest_ruby_build_version
+  not_if { desired_ruby_build_version? }
 end

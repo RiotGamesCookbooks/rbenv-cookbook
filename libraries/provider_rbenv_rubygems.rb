@@ -19,6 +19,12 @@
 #
 
 class Chef
+  module Mixin
+    module Rbenv
+      # stub to satisfy RbenvRubygems (library load order not guaranteed)
+    end
+  end
+
   class Provider
     class Package
       class RbenvRubygems < Chef::Provider::Package::Rubygems
