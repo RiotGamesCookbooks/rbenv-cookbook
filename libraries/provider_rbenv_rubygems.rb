@@ -18,10 +18,13 @@
 # limitations under the License.
 #
 
-$:.push File.expand_path("../", __FILE__)
-require 'chef/mixin/rbenv'
-
 class Chef
+  module Mixin
+    module Rbenv
+      # stub to satisfy RbenvRubygems (library load order not guaranteed)
+    end
+  end
+
   class Provider
     class Package
       class RbenvRubygems < Chef::Provider::Package::Rubygems
