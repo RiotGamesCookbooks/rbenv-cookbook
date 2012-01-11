@@ -21,7 +21,7 @@
 class Chef
   module Mixin
     module Rbenv
-      # stub to satisfy RbenvRubygems (library load order not guaranteed)
+      # stub to satisfy RecipeExt (library load order not guaranteed)
     end
   end
   
