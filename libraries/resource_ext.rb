@@ -26,7 +26,7 @@ class Chef
       # stub to satisfy ResourceExt (library load order not guaranteed)
     end
 
-    module Rbenv
+    module RubyBuild
       # stub to satisfy ResourceExt (library load order not guaranteed)
     end
   end
