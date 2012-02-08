@@ -31,7 +31,8 @@ class Chef
           :group => 'rbenv', 
           :env => { 
             'RBENV_ROOT' => rbenv_root
-          }
+          },
+          :timeout => 3600
         }
         shell_out("#{rbenv_binary_path} #{cmd}", Chef::Mixin::DeepMerge.deep_merge!(options, default_options))
       end
