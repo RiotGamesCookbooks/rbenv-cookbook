@@ -43,6 +43,10 @@ class Chef
       end
 
       def gem_binary_path_for(version)
+        "#{rbenv_prefix_for(version)}/bin/gem"
+      end
+
+      def rbenv_prefix_for(version)
         out = rbenv_command("prefix", :env => { 'RBENV_VERSION' => version })
 
         unless out.exitstatus == 0
@@ -50,8 +54,6 @@ class Chef
         end
 
         prefix = out.stdout.chomp
-
-        "#{prefix}/bin/gem"
       end
 
       def rbenv_root
