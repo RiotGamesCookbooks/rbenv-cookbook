@@ -26,6 +26,14 @@ class Chef
       include Chef::Mixin::ShellOut
 
       def rbenv_command(cmd, options = {})
+        unless rbenv_installed?
+          Chef::Log.error("rbenv is not yet installed. Unable to run " +
+                          "rbenv_command:`#{cmd}`. Are you trying to use " +
+                          "`rbenv_command` at the top level of your recipe? " +
+                          "This is known to cause this error")
+          raise "rbenv not installed. Can't run rbenv_command"
+        end
+
         default_options = {
           :user => 'rbenv', 
           :group => 'rbenv', 
@@ -35,6 +43,11 @@ class Chef
           :timeout => 3600
         }
         shell_out("#{rbenv_binary_path} #{cmd}", Chef::Mixin::DeepMerge.deep_merge!(options, default_options))
+      end
+
+      def rbenv_installed?
+        out = shell_out("ls #{rbenv_binary_path}")
+        out.exitstatus == 0
       end
 
       def ruby_version_installed?(version)
