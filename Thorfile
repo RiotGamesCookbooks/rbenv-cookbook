@@ -49,7 +49,7 @@ class Default < Thor
     def publish_cookbook(options)
       cmd = "knife cookbook site share #{cookbook_name} \"#{cookbook_category}\" -o #{source_root.join("..")} -c #{options[:knife_config]}"
       cmd << " -V" if options[:verbose]
-      system cmd
+      sh cmd
     end
 
     def tag_version
