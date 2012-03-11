@@ -140,7 +140,7 @@ rbenv_root          | path to clone rbenv into                       | '/opt/rbe
 
 # License and Author
 
-Author:: Jamie Winsor (<jwinsor@riotgames.com>)
+Author:: Jamie Winsor (<jamie@vialstudios.com>)
 
 Copyright 2011, Riot Games
 

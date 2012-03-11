@@ -1,5 +1,5 @@
 maintainer       "Riot Games"
-maintainer_email "jwinsor@riotgames.com"
+maintainer_email "jamie@vialstudios.com"
 license          "Apache 2.0"
 description      "Installs and configures rbenv"
 version          "1.0.2"

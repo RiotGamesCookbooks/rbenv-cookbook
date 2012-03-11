@@ -2,7 +2,7 @@
 # Cookbook Name:: rbenv
 # Definition:: rbenv_installation
 #
-# Author:: Jamie Winsor (<jwinsor@riotgames.com>)
+# Author:: Jamie Winsor (<jamie@vialstudios.com>)
 # Copyright 2011, Riot Games
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
