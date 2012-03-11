@@ -124,6 +124,20 @@ rbenv_root          | path to clone rbenv into                       | '/opt/rbe
       rbenv_root '/opt/rbenv'
     end
 
+
+# Releasing
+
+1. Install the prerequisite gems
+    
+        $ gem install chef
+        $ gem install thor
+
+2. Increment the version number in the metadata.rb file
+
+3. Run the Thor release task to create a tag and push to the community site
+
+        $ thor release
+
 # License and Author
 
 Author:: Jamie Winsor (<jwinsor@riotgames.com>)
