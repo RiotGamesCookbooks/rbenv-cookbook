@@ -40,13 +40,13 @@ define :rbenv_installation,
   include_recipe "git"
   include_recipe "rbenv::ruby_build"
 
+  group "rbenv" do
+    members node[:rbenv][:group_users] if node[:rbenv][:group_users]
+  end
+
   user "rbenv" do
     shell "/bin/bash"
     supports :manage_home => true
-  end
-
-  group "rbenv" do
-    members node[:rbenv][:group_users] if node[:rbenv][:group_users]
   end
 
   directory params[:rbenv_root] do
