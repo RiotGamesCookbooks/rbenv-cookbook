@@ -26,6 +26,14 @@ class Chef
       include Chef::Mixin::ShellOut
 
       def rbenv_command(cmd, options = {})
+        unless rbenv_installed?
+          Chef::Log.error("rbenv is not yet installed. Unable to run " +
+                          "rbenv_command:`#{cmd}`. Are you trying to use " +
+                          "`rbenv_command` at the top level of your recipe? " +
+                          "This is known to cause this error")
+          raise "rbenv not installed. Can't run rbenv_command"
+        end
+
         default_options = {
           :user => 'rbenv', 
           :group => 'rbenv', 
@@ -37,12 +45,21 @@ class Chef
         shell_out("#{rbenv_binary_path} #{cmd}", Chef::Mixin::DeepMerge.deep_merge!(options, default_options))
       end
 
+      def rbenv_installed?
+        out = shell_out("ls #{rbenv_binary_path}")
+        out.exitstatus == 0
+      end
+
       def ruby_version_installed?(version)
         out = rbenv_command("prefix", :env => { 'RBENV_VERSION' => version })
         out.exitstatus == 0
       end
 
       def gem_binary_path_for(version)
+        "#{rbenv_prefix_for(version)}/bin/gem"
+      end
+
+      def rbenv_prefix_for(version)
         out = rbenv_command("prefix", :env => { 'RBENV_VERSION' => version })
 
         unless out.exitstatus == 0
@@ -50,8 +67,6 @@ class Chef
         end
 
         prefix = out.stdout.chomp
-
-        "#{prefix}/bin/gem"
       end
 
       def rbenv_root

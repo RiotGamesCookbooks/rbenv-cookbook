@@ -29,16 +29,25 @@ define :rbenv_installation,
   params[:rbenv_root] ||= "#{node[:rbenv][:system_prefix]}/rbenv"
   params[:ruby_build_bin_path] ||= "#{node[:ruby_build][:prefix]}/bin"
 
+  package "curl"
+
+  if %w( ubuntu debian ).include?(node.platform)
+    package "build-essential"
+    package "openssl"
+    package "libssl-dev"
+  end
+
   include_recipe "git"
   include_recipe "rbenv::ruby_build"
 
-  user "rbenv" do
-    shell "/bin/bash"
-    supports :manage_home => true
-  end
-
   group "rbenv" do
     members node[:rbenv][:group_users] if node[:rbenv][:group_users]
+  end
+
+  user "rbenv" do
+    shell "/bin/bash"
+    group "rbenv"
+    supports :manage_home => true
   end
 
   directory params[:rbenv_root] do
