@@ -46,6 +46,7 @@ define :rbenv_installation,
 
   user "rbenv" do
     shell "/bin/bash"
+    group "rbenv"
     supports :manage_home => true
   end
 
