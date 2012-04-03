@@ -21,6 +21,7 @@
 
 include_recipe "ohai"
 
+bin_path = rbenv_binary_path
 template "#{node[:ohai][:plugin_path]}/rbenv.rb" do
   source 'plugins/rbenv.rb.erb'
   owner 'root'
@@ -28,7 +29,7 @@ template "#{node[:ohai][:plugin_path]}/rbenv.rb" do
   mode 0755
 
   variables(
-    :rbenv_bin => "#{node[:rbenv][:system_prefix]}/rbenv/bin/rbenv"
+    :rbenv_bin => bin_path
   )
 
   notifies :reload, "ohai[custom_plugins]", :immediately
