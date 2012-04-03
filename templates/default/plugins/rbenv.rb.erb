@@ -18,9 +18,9 @@
 
 provides "rbenv"
 provides "rbenv/root"
+provides "rbenv/global_version"
 provides "rbenv/current_version"
 provides "rbenv/current_version_prefix"
-provides "rbenv/global"
 provides "rbenv/versions"
 
 rbenv Mash.new unless rbenv
@@ -62,7 +62,7 @@ def versions
 end
 
 rbenv[:root]                   = root
+rbenv[:global_version]         = global
 rbenv[:current_version]        = version
 rbenv[:current_version_prefix] = prefix
-rbenv[:global]                 = global
 rbenv[:versions]               = versions
