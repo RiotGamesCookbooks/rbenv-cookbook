@@ -18,7 +18,8 @@
 
 provides "rbenv"
 provides "rbenv/root"
-provides "rbenv/prefix"
+provides "rbenv/current_version"
+provides "rbenv/current_version_prefix"
 provides "rbenv/global"
 provides "rbenv/versions"
 
@@ -30,6 +31,11 @@ end
 
 def root
   status, stdout, stderr = rbenv_command("root")
+  status == 0 ? stdout : nil
+end
+
+def version
+  status, stdout, stderr = rbenv_command("version-name")
   status == 0 ? stdout : nil
 end
 
@@ -55,7 +61,8 @@ def versions
   versions
 end
 
-rbenv[:root]     = root
-rbenv[:prefix]   = prefix
-rbenv[:global]   = global
-rbenv[:versions] = versions
+rbenv[:root]                   = root
+rbenv[:current_version]        = version
+rbenv[:current_version_prefix] = prefix
+rbenv[:global]                 = global
+rbenv[:versions]               = versions
