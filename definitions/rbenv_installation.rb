@@ -31,7 +31,8 @@ define :rbenv_installation,
 
   package "curl"
 
-  if %w( ubuntu debian ).include?(node.platform)
+  case node[:platform]
+  when "ubuntu", "debian"
     package "build-essential"
     package "openssl"
     package "libssl-dev"
