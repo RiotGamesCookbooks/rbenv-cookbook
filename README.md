@@ -17,7 +17,7 @@ Installs and manages your versions of Ruby and Gems in Chef with rbenv and ruby_
 * `rbenv[:group_users]`     - Array of users belonging to the rbenv group 
 * `rbenv[:git_repository]`  - Git url of the rbenv repository to clone
 * `rbenv[:git_revision]`    - Revision of the rbenv repository to checkout
-* `rbenv[:system_prefix]`   - Path prefix rbenv will be installed into
+* `rbenv[:install_prefix]`  - Path prefix rbenv will be installed into
 
 ## ruby_build
 

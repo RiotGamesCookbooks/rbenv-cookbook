@@ -70,7 +70,7 @@ class Chef
       end
 
       def rbenv_root
-        "#{node[:rbenv][:system_prefix]}/rbenv"
+        "#{node[:rbenv][:install_prefix]}/rbenv"
       end
 
       def rbenv_binary_path

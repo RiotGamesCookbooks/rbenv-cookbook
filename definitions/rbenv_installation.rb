@@ -26,7 +26,7 @@ define :rbenv_installation,
        :ruby_build_bin_path => nil do
 
   params[:type] ||= params[:name]
-  params[:rbenv_root] ||= "#{node[:rbenv][:system_prefix]}/rbenv"
+  params[:rbenv_root] ||= "#{node[:rbenv][:install_prefix]}/rbenv"
   params[:ruby_build_bin_path] ||= "#{node[:ruby_build][:prefix]}/bin"
 
   package "curl"
