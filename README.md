@@ -39,6 +39,10 @@ Configures a node with a system wide rbenv and ruby_build installation accessibl
 
 Installs ruby_build to a node which enables rbenv the ability to install and manage versions of Ruby
 
+## ohai_plugin
+
+Installs an rbenv Ohai plugin onto the node to automatically populate attributes about the rbenv installation
+
 # Resources / Providers
 
 ## rbenv_ruby
