@@ -12,3 +12,5 @@ end
 %w{ git }.each do |cb|
   depends cb
 end
+
+depends 'ohai', '~> 1.0.2'

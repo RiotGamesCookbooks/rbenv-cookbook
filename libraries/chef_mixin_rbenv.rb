@@ -73,11 +73,9 @@ class Chef
         "#{node[:rbenv][:system_prefix]}/rbenv"
       end
 
-      private
-
-        def rbenv_binary_path
-          "#{rbenv_root}/bin/rbenv"
-        end
+      def rbenv_binary_path
+        "#{rbenv_root}/bin/rbenv"
+      end
     end
   end
 end
