@@ -38,6 +38,7 @@ class Chef
         default_options = {
           :user => 'rbenv', 
           :group => 'rbenv', 
+          :cwd => rbenv_root,
           :env => { 
             'RBENV_ROOT' => rbenv_root
           },
