@@ -36,6 +36,7 @@ action :install do
     end
 
     Chef::Log.debug("rbenv_ruby[#{@ruby.name}] build time was #{(Time.now - start_time)/60.0} minutes.")
+    new_resource.updated_by_last_action(true)
   end
 end
 
