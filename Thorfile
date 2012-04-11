@@ -29,9 +29,20 @@ class Default < Thor
       exit 1
     end
 
+    invoke :critic
+
     tag_version {
       publish_cookbook(options)
     }
+  end
+
+  desc "critic", "Critique the cookbook using Foodcritic"
+  def critic
+    out, code = sh_with_excode("foodcritic -f any --tags '~FC001' --tags '~FC015' #{source_root}")
+    unless code.exitstatus == 0
+      say out
+      exit code.exitstatus
+    end
   end
 
   private
