@@ -14,7 +14,7 @@ Installs and manages your versions of Ruby and Gems in Chef with rbenv and ruby_
 
 ## rbenv
 
-* `rbenv[:group_users]`     - Array of users belonging to the rbenv group 
+* `rbenv[:group_users]`     - Array of users belonging to the rbenv group
 * `rbenv[:git_repository]`  - Git url of the rbenv repository to clone
 * `rbenv[:git_revision]`    - Revision of the rbenv repository to checkout
 * `rbenv[:install_prefix]`  - Path prefix rbenv will be installed into
@@ -58,7 +58,8 @@ install | Install the version of Ruby | Yes
 Attribute    | Description                                                 | Default
 -------      |-------------                                                |---------
 ruby_version | the ruby version and patch level you wish to install        | name
-force        | install even if this version is already present (reinstall) |
+force        | install even if this version is already present (reinstall) | false
+global       | set this ruby version as the global version                 | false
 
 ### Examples
 
@@ -81,7 +82,7 @@ Install specified RubyGem for the specified ruby_version managed by rbenv
 Action  | Description                           | Default
 ------- |-------------                          |---------
 install | Install the gem                       | Yes
-upgrade | Upgrade the gem to the given version  | 
+upgrade | Upgrade the gem to the given version  |
 remove  | Remove the gem                        |
 purge   | Purge the gem and configuration files |
 
@@ -132,7 +133,7 @@ rbenv_root          | path to clone rbenv into                       | '/opt/rbe
 # Releasing
 
 1. Install the prerequisite gems
-    
+
         $ gem install chef
         $ gem install thor
 
