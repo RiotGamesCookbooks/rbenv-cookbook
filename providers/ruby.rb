@@ -40,8 +40,6 @@ action :install do
     new_resource.updated_by_last_action(true)
   end
 
-  Chef::Log.info "Ruby global? #{new_resource.global}"
-
   if new_resource.global && !rbenv_global_version?(@ruby.name)
     Chef::Log.info "Setting #{@ruby.name} as the rbenv global version"
     out = rbenv_command("global #{@ruby.name}")
