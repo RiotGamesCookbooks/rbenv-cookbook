@@ -26,9 +26,9 @@ action :install do
     Chef::Log.debug "rbenv_ruby[#{@ruby.name}] is already installed so skipping"
   else
     Chef::Log.info "rbenv_ruby[#{@ruby.name}] is building, this may take a while..."
-    
+
     start_time = Time.now
-    
+
     out = rbenv_command("install #{@ruby.name}")
 
     unless out.exitstatus == 0
@@ -36,6 +36,16 @@ action :install do
     end
 
     Chef::Log.debug("rbenv_ruby[#{@ruby.name}] build time was #{(Time.now - start_time)/60.0} minutes.")
+
+    new_resource.updated_by_last_action(true)
+  end
+
+  if new_resource.global && !rbenv_global_version?(@ruby.name)
+    Chef::Log.info "Setting #{@ruby.name} as the rbenv global version"
+    out = rbenv_command("global #{@ruby.name}")
+    unless out.exitstatus == 0
+      raise Chef::Exceptions::ShellCommandFailed, "\n" + out.format_for_exception
+    end
     new_resource.updated_by_last_action(true)
   end
 end
