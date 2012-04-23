@@ -36,10 +36,10 @@ class Chef
         end
 
         default_options = {
-          :user => 'rbenv', 
-          :group => 'rbenv', 
+          :user => 'rbenv',
+          :group => 'rbenv',
           :cwd => rbenv_root,
-          :env => { 
+          :env => {
             'RBENV_ROOT' => rbenv_root
           },
           :timeout => 3600
@@ -55,6 +55,16 @@ class Chef
       def ruby_version_installed?(version)
         out = rbenv_command("prefix", :env => { 'RBENV_VERSION' => version })
         out.exitstatus == 0
+      end
+
+      def rbenv_global_version?(version)
+        out = rbenv_command("global")
+        unless out.exitstatus == 0
+          raise Chef::Exceptions::ShellCommandFailed, "\n" + out.format_for_exception
+        end
+
+        global_version = out.stdout.chomp
+        global_version == version
       end
 
       def gem_binary_path_for(version)
