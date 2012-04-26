@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-define :rbenv_installation, 
+define :rbenv_installation,
        :type                => [:system],
        :git_repository      => 'git://github.com/sstephenson/rbenv.git',
        :git_revision        => 'master',
@@ -37,6 +37,7 @@ define :rbenv_installation,
     package "build-essential"
     package "openssl"
     package "libssl-dev"
+    package "libreadline-dev"
   end
 
   include_recipe "git"
