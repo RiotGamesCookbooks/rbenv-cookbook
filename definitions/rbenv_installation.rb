@@ -33,6 +33,8 @@ define :rbenv_installation,
   package "curl"
 
   case node[:platform]
+  when "redhat"
+    package "openssl-devel"
   when "ubuntu", "debian"
     package "build-essential"
     package "openssl"
