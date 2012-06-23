@@ -33,9 +33,10 @@ define :rbenv_installation,
   package "curl"
 
   case node[:platform]
-  when "redhat"
+  when "redhat", "centos"
     package "openssl-devel"
     package "zlib-devel"
+    package "readline-devel"
   when "ubuntu", "debian"
     package "build-essential"
     package "openssl"
