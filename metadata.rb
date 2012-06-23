@@ -3,7 +3,7 @@ maintainer       "Riot Games"
 maintainer_email "jamie@vialstudios.com"
 license          "Apache 2.0"
 description      "Installs and configures rbenv"
-version          "1.3.1"
+version          "1.3.2"
 
 recipe "rbenv", "Delegates to recipe[rbenv::system_install]"
 recipe "rbenv::system_install", "Configures a node with a system wide rbenv and ruby_build installation accessible by users in the rbenv group"
