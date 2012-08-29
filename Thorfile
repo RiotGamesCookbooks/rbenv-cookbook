@@ -33,7 +33,7 @@ class Default < Thor
       exit 1
     end
 
-    invoke :critic
+    invoke :'foodcritic:lint'
 
     tag_version {
       publish_cookbook(options)
