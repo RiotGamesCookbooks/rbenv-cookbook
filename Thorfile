@@ -40,15 +40,6 @@ class Default < Thor
     }
   end
 
-  desc "critic", "Critique the cookbook using Foodcritic"
-  def critic
-    out, code = sh_with_excode("foodcritic -f any --tags '~FC001' --tags '~FC015' #{source_root}")
-    unless code.exitstatus == 0
-      say out
-      exit code.exitstatus
-    end
-  end
-
   private
 
     def clean?
@@ -102,3 +93,4 @@ class Default < Thor
       [ outbuf, $? ]
     end
 end
+

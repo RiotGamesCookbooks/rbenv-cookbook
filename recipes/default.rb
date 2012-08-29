@@ -19,4 +19,67 @@
 # limitations under the License.
 #
 
-include_recipe "rbenv::system_install"
+node.set[:rbenv][:root]          = "#{node[:rbenv][:install_prefix]}/rbenv"
+node.set[:ruby_build][:bin_path] = "#{node[:ruby_build][:prefix]}/bin"
+
+package "curl"
+
+case node[:platform]
+when "redhat", "centos"
+  package "openssl-devel"
+  package "zlib-devel"
+  package "readline-devel"
+when "ubuntu", "debian"
+  package "build-essential"
+  package "openssl"
+  package "libssl-dev"
+  package "libreadline-dev"
+end
+
+include_recipe "git"
+
+group "rbenv" do
+  members node[:rbenv][:group_users] if node[:rbenv][:group_users]
+end
+
+user "rbenv" do
+  shell "/bin/bash"
+  group "rbenv"
+  supports :manage_home => true
+end
+
+directory node[:rbenv][:root] do
+  owner "rbenv"
+  group "rbenv"
+  mode "0775"
+end
+
+git node[:rbenv][:root] do
+  repository node[:rbenv][:git_repository]
+  reference node[:rbenv][:git_revision]
+  user "rbenv"
+  group "rbenv"
+  action :sync
+
+  notifies :create, "template[/etc/profile.d/rbenv.sh]", :immediately
+end
+
+template "/etc/profile.d/rbenv.sh" do
+  source "rbenv.sh.erb"
+  mode "0644"
+  variables(
+    :rbenv_root => node[:rbenv][:root],
+    :ruby_build_bin_path => node[:ruby_build][:bin_path]
+  )
+
+  notifies :create, "ruby_block[initialize_rbenv]", :immediately
+end
+
+ruby_block "initialize_rbenv" do
+  block do
+    ENV['RBENV_ROOT'] = node[:rbenv][:root]
+    ENV['PATH'] = "#{node[:rbenv][:root]}/bin:#{node[:ruby_build][:bin_path]}:#{ENV['PATH']}"
+  end
+
+  action :nothing
+end

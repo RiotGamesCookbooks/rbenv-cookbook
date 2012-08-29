@@ -10,6 +10,35 @@ Installs and manages your versions of Ruby and Gems in Chef with rbenv and ruby_
 * Chef 10
 * Centos / Redhat / Fedora / Ubuntu / Debian
 
+# Usage
+
+Add a dependency on rbenv to your cookbook's `metadata.rb`
+
+    depends 'rbenv'
+
+## Installing rbenv and ruby_build
+
+To install rbenv and ruby_build; Include each recipe in one of your cookbook's recipes
+
+    include_recipe "rbenv::default"
+    include_recipe "rbenv::ruby_build"
+
+## Installing a Ruby
+
+And now to install a Ruby use the `rbenv_ruby` LWRP
+
+    rbenv_ruby "1.9.3-p194"
+
+## Installing Gems for rbenv managed Rubies
+
+If you'd like a specific Ruby installed by rbenv to include a Gem, say bundler, use the `rbenv_gem` LWRP
+
+    rbenv_gem "bundler" do
+      ruby_version "1.9.3-p194"
+    end
+
+Be sure to include a value for the `ruby_version` attribute so the gem is installed for the correct Ruby
+
 # Attributes
 
 ## rbenv
@@ -29,15 +58,11 @@ Installs and manages your versions of Ruby and Gems in Chef with rbenv and ruby_
 
 ## default
 
-Delegates to `recipe[rbenv::system_install]`
-
-## system_install
-
-Configures a node with a system wide rbenv and ruby_build installation accessible by users in the rbenv group
+Configures a node with a system wide rbenv accessible by users in the rbenv group
 
 ## ruby_build
 
-Installs ruby_build to a node which enables rbenv the ability to install and manage versions of Ruby
+Installs ruby_build to a node which enables the `rbenv_ruby` LWRP to install Rubies to the node
 
 ## ohai_plugin
 
@@ -79,6 +104,7 @@ global       | set this ruby version as the global version                 | fal
 Install specified RubyGem for the specified ruby_version managed by rbenv
 
 ### Actions
+
 Action  | Description                           | Default
 ------- |-------------                          |---------
 install | Install the gem                       | Yes
@@ -87,6 +113,7 @@ remove  | Remove the gem                        |
 purge   | Purge the gem and configuration files |
 
 ### Attributes
+
 Attribute     | Description                                        | Default
 -------       |-------------                                       |---------
 package_name  | Name of given to modify                            | name
@@ -105,58 +132,18 @@ options       | Additional options to the underlying gem command   |
       ruby_version "1.9.2-p290"
     end
 
-# Definitions
-
-## rbenv_installation
-
-Installs and configures rbenv into the desired place on your file system. Used internally by the `system_install` recipe, but can be leveraged in recipes of your own.
-
-Currently only supports a system wide install. User specific installations to come.
-
-### Parameters
-
-Name                | Description                                    | Default
------               |-------------                                   |--------
-git_repository      | git repository to clone the rbenv project from | 'git://github.com/sstephenson/rbenv.git'
-git_revision        | git revision of the rbenv project to clone     | 'master'
-rbenv_root          | path to clone rbenv into                       | '/opt/rbenv'
-
-### Example
-
-    rbenv_installation do
-      git_repository 'git://github.com/sstephenson/rbenv.git'
-      git_revision 'master'
-      rbenv_root '/opt/rbenv'
-    end
-
-
 # Releasing
 
 1. Install the prerequisite gems
 
-        $ gem install chef
-        $ gem install thor
+        $ bundle install
 
 2. Increment the version number in the metadata.rb file
 
 3. Run the Thor release task to create a tag and push to the community site
 
-        $ thor release
+        $ bundle exec thor release
 
-# License and Author
+# Authors and Contributors
 
-Author:: Jamie Winsor (<jamie@vialstudios.com>)
-
-Copyright 2011, Riot Games
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+* Jamie Winsor (<jamie@vialstudios.com>)
