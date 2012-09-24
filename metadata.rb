@@ -17,4 +17,4 @@ end
   depends cb
 end
 
-depends 'ohai', '>= 1.1.0'
+depends 'ohai', '~> 1.0'
