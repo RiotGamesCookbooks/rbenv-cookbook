@@ -3,7 +3,7 @@ maintainer       "Riot Games"
 maintainer_email "jamie@vialstudios.com"
 license          "Apache 2.0"
 description      "Installs and configures rbenv"
-version          "1.4.0"
+version          "1.4.1"
 
 recipe "rbenv", "Installs and configures rbenv"
 recipe "rbenv::ruby_build", "Installs and configures ruby_build"
@@ -17,4 +17,4 @@ end
   depends cb
 end
 
-depends 'ohai', '~> 1.0'
+depends 'ohai', '>= 1.1'
