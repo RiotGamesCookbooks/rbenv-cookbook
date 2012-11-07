@@ -1,11 +1,23 @@
+require 'berkshelf/vagrant'
+
 Vagrant::Config.run do |config|
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
+  # The path to the Berksfile to use with Vagrant Berkshelf
+  # config.berkshelf.berksfile_path = "./Berksfile"
+
+  # An array of symbols representing groups of cookbook described in the Vagrantfile
+  # to skip installing and copying to Vagrant's shelf.
+  # config.berkshelf.only = []
+
+  # An array of symbols representing groups of cookbook described in the Vagrantfile
+  # to skip installing and copying to Vagrant's shelf.
+  # config.berkshelf.except = []
+
   config.vm.host_name = "rbenv-berkshelf"
 
-  # CentOS 6.3
   config.vm.box = "Berkshelf-CentOS-6.3-x86_64-minimal"
   config.vm.box_url = "https://dl.dropbox.com/u/31081437/Berkshelf-CentOS-6.3-x86_64-minimal.box"
 
@@ -21,7 +33,7 @@ Vagrant::Config.run do |config|
   # Assign this VM to a bridged network, allowing you to connect directly to a
   # network using the host's network device. This makes the VM appear as another
   # physical device on your network.
-  # config.vm.network :bridged
+  config.vm.network :bridged
 
   # Forward a port from the guest to the host, which allows for outside
   # computers to access the VM, whereas host only networking does not.
@@ -36,8 +48,6 @@ Vagrant::Config.run do |config|
   config.ssh.timeout   = 120
 
   config.vm.provision :chef_solo do |chef|
-    chef.cookbooks_path = ["cookbooks"]
-    
     chef.json = {
       :rbenv => {
         :group_users => ["vagrant"]
@@ -49,14 +59,4 @@ Vagrant::Config.run do |config|
       "recipe[rbenv::ruby_build]"
     ]
   end
-
-  # config.vm.provision :chef_client do |chef|
-  #   chef.chef_server_url = 'https://api.opscode.com/organizations/vialstudios'
-  #   chef.validation_client_name = 'vialstudios-validator'
-  #   chef.validation_key_path = '/Users/reset/.chef/vialstudios-validator.pem'
-  #
-  #   chef.run_list = [
-  #     "recipe[rbenv::default]"
-  #   ]
-  # end
 end
