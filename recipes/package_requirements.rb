@@ -20,7 +20,7 @@ when "ubuntu", "debian"
   # another build-essential. useful for compiling code
   package "libc6-dev"
   package "automake"
-  packge "libtool"
+  package "libtool"
 
   # https://github.com/sstephenson/ruby-build/issues/119
   # "It seems your ruby installation is missing psych (for YAML
