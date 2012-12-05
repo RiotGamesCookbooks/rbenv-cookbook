@@ -19,8 +19,8 @@
 # limitations under the License.
 #
 
-node.set[:rbenv][:root]          = "#{node[:rbenv][:install_prefix]}/rbenv"
-node.set[:ruby_build][:bin_path] = "#{node[:ruby_build][:prefix]}/bin"
+node.set[:rbenv][:root]          = rbenv_root
+node.set[:ruby_build][:bin_path] = rbenv_binary_path
 
 package "curl"
 
