@@ -13,7 +13,7 @@ recipe "rbenv::ohai_plugin", "Installs an rbenv Ohai plugin to populate automati
   supports os
 end
 
-%w{ git }.each do |cb|
+%w{ git build-essential }.each do |cb|
   depends cb
 end
 

@@ -22,21 +22,7 @@
 node.set[:rbenv][:root]          = "#{node[:rbenv][:install_prefix]}/rbenv"
 node.set[:ruby_build][:bin_path] = "#{node[:ruby_build][:prefix]}/bin"
 
-package "curl"
-
-case node[:platform]
-when "redhat", "centos"
-  package "openssl-devel"
-  package "zlib-devel"
-  package "readline-devel"
-when "ubuntu", "debian"
-  package "build-essential"
-  package "openssl"
-  package "libssl-dev"
-  package "libreadline-dev"
-end
-
-include_recipe "git"
+include_recipe "rbenv::package_requirements"
 
 group "rbenv" do
   members node[:rbenv][:group_users] if node[:rbenv][:group_users]
