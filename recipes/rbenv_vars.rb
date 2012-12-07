@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: rbenv
-# Attributes:: default
+# Recipe:: rbenv_vars
 #
 # Author:: Jamie Winsor (<jamie@vialstudios.com>)
 #
@@ -19,14 +19,12 @@
 # limitations under the License.
 #
 
-default[:rbenv][:group_users]         = Array.new
-default[:rbenv][:git_repository]      = "git://github.com/sstephenson/rbenv.git"
-default[:rbenv][:git_revision]        = "master"
-default[:rbenv][:install_prefix]      = "/opt"
+include_recipe "git"
 
-default[:ruby_build][:git_repository] = "git://github.com/sstephenson/ruby-build.git"
-default[:ruby_build][:git_revision]   = "master"
-default[:ruby_build][:prefix]         = "/usr/local"
+plugin_path = "#{node[:rbenv][:root]}/plugins/rbenv-vars"
 
-default[:rbenv_vars][:git_repository] = "git://github.com/sstephenson/rbenv-vars.git"
-default[:rbenv_vars][:git_revision]   = "master"
+git plugin_path do
+  repository node[:rbenv_vars][:git_repository]
+  reference  node[:rbenv_vars][:git_revision]
+  action :sync
+end

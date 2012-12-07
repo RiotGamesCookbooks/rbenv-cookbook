@@ -87,7 +87,7 @@ end
 # rbenv init creates these directories as root because it is called
 # from /etc/profile.d/rbenv.sh But we want them to be owned by rbenv
 # check https://github.com/sstephenson/rbenv/blob/master/libexec/rbenv-init#L71
-%w{shims versions}.each do |dir_name|
+%w{shims versions plugins}.each do |dir_name|
   directory "#{node[:rbenv][:root]}/#{dir_name}" do
     owner "rbenv"
     group "rbenv"
