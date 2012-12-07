@@ -1,3 +1,4 @@
 export RBENV_ROOT=<%= @rbenv_root %>
 export PATH=$RBENV_ROOT/bin:<%= @ruby_build_bin_path %>/bin:$PATH
+source $RBENV_ROOT/completions/rbenv.bash
 eval "$(rbenv init -)"
