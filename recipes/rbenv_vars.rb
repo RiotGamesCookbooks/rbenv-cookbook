@@ -2,7 +2,7 @@
 # Cookbook Name:: rbenv
 # Recipe:: rbenv_vars
 #
-# Author:: Jamie Winsor (<jamie@vialstudios.com>)
+# Author:: Deepak Kannan (<kannan.deepak@gmail.com>)
 #
 # Copyright 2011-2012, Riot Games
 #
