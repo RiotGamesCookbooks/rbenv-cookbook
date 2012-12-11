@@ -23,6 +23,12 @@ To install rbenv and ruby_build; Include each recipe in one of your cookbook's r
     include_recipe "rbenv::default"
     include_recipe "rbenv::ruby_build"
 
+## Installing rbenv-vars
+
+To install rbenv-vars; Include this recipe in one of your cookbook's recipes
+
+    include_recipe "rbenv::rbenv_vars"
+
 ## Installing a Ruby
 
 And now to install a Ruby use the `rbenv_ruby` LWRP
