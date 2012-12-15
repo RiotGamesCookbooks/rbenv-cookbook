@@ -26,7 +26,6 @@ default[:rbenv][:install_prefix]      = "/opt"
 
 default[:ruby_build][:git_repository] = "git://github.com/sstephenson/ruby-build.git"
 default[:ruby_build][:git_revision]   = "master"
-default[:ruby_build][:prefix]         = "/usr/local"
 
 default[:rbenv_vars][:git_repository] = "git://github.com/sstephenson/rbenv-vars.git"
 default[:rbenv_vars][:git_revision]   = "master"
