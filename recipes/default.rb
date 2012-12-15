@@ -20,6 +20,7 @@
 #
 
 node.set[:rbenv][:root]          = rbenv_root
+node.set[:ruby_build][:prefix]   = node[:rbenv][:root]
 node.set[:ruby_build][:bin_path] = rbenv_binary_path
 
 include_recipe "rbenv::package_requirements"
