@@ -35,20 +35,69 @@ user "rbenv" do
   supports :manage_home => true
 end
 
-directory node[:rbenv][:root] do
-  owner "rbenv"
-  group "rbenv"
-  mode "0775"
-end
+case node[:rbenv][:install_method]
+when "git"
+  directory node[:rbenv][:root] do
+    owner "rbenv"
+    group "rbenv"
+    mode "0775"
+  end
 
-git node[:rbenv][:root] do
-  repository node[:rbenv][:git_repository]
-  reference node[:rbenv][:git_revision]
-  user "rbenv"
-  group "rbenv"
-  action :sync
+  git node[:rbenv][:root] do
+    repository node[:rbenv][:git_repository]
+    reference node[:rbenv][:git_revision]
+    user "rbenv"
+    group "rbenv"
+    action :sync
 
-  notifies :create, "template[/etc/profile.d/rbenv.sh]", :immediately
+    notifies :create, "template[/etc/profile.d/rbenv.sh]", :immediately
+  end
+when "file"
+  cache_path = File.join(node[:rbenv][:root], "cache")
+  node.set[:rbenv][:cache_path] = cache_path
+
+  directory cache_path do
+    owner "rbenv"
+    group "rbenv"
+    mode 0755
+  end
+
+  cookbook_file node[:rbenv][:filename] do
+    owner "rbenv"
+    group "rbenv"
+    mode 0644
+    path File.join(Chef::Config[:file_cache_path], node[:rbenv][:filename])
+    cookbook node[:rbenv][:cookbook]
+  end
+  
+  rbenv_file = node[:rbenv][:filename]
+  rbenv_version = File.basename(rbenv_file, "tar.gz")
+  rbenv_dir = File.join(Chef::Config[:file_cache_path], rbenv_version)
+
+  bash "extract rbenv" do
+    cwd Chef::Config[:file_cache_path]
+    code <<-EOH
+      tar xzf "#{rbenv_file}"
+      mv rbenv-master "#{node[:rbenv][:root]}"
+    EOH
+    notifies :create, "directory[#{node[:rbenv][:root]}]", :immediately
+    not_if {
+      node[:rbenv][:installed_version] == rbenv_version
+    }
+  end
+
+  directory node[:rbenv][:root] do
+    owner "rbenv"
+    group "rbenv"
+    mode "0775"
+    recursive true
+    action :nothing
+  end
+
+  node.set[:rbenv][:installed_version] = rbenv_version
+else
+  Chef::Log.error("Invalid install method for rbenv: #{node[:rbenv][:install_method]}")
+  raise "Invalid install method: #{node[:rbenv][:install_method]}"
 end
 
 template "/etc/profile.d/rbenv.sh" do
