@@ -82,7 +82,7 @@ when "file"
     EOH
     notifies :create, "directory[#{node[:rbenv][:root]}]", :immediately
     not_if {
-      node[:rbenv][:installed_version] == rbenv_version
+      File.exists?(node[:rbenv][:root]) && node[:rbenv][:installed_version] == rbenv_version
     }
   end
 
