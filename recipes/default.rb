@@ -56,11 +56,6 @@ when "file"
   cache_path = File.join(node[:rbenv][:root], "cache")
   node.set[:rbenv][:cache_path] = cache_path
 
-  directory cache_path do
-    owner "rbenv"
-    group "rbenv"
-    mode 0755
-  end
 
   cookbook_file node[:rbenv][:filename] do
     owner "rbenv"
@@ -84,6 +79,13 @@ when "file"
     not_if {
       File.exists?(node[:rbenv][:root]) && node[:rbenv][:installed_version] == rbenv_version
     }
+    notifies :create, "template[/etc/profile.d/rbenv.sh]", :immediately
+  end
+
+  directory cache_path do
+    owner "rbenv"
+    group "rbenv"
+    mode 0755
   end
 
   directory node[:rbenv][:root] do
