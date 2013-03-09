@@ -4,7 +4,7 @@ include_recipe "git"
 
 # TODO: have tested on ubuntu. have left others as is
 case node[:platform]
-when "redhat", "centos"
+when "redhat", "centos", "oracle"
   # TODO: add as per "rvm requirements"
   package "openssl-devel"
   package "zlib-devel"
