@@ -61,12 +61,14 @@ class Chef
           true
         end
 
-        def install_via_gem_command(name, version)
-          src = @new_resource.source && "  --source=#{@new_resource.source} --source=http://rubygems.org"
+        def install_via_gem_command(name, version = nil)
+          src            = @new_resource.source && "  --source=#{@new_resource.source} --source=http://rubygems.org"
+          version_option = (version.nil? || version.empty?) ? "" : " -v \"#{version}\""
+
           shell_out!(
-            "#{gem_binary_path} install #{name} -q --no-rdoc --no-ri -v \"#{version}\"#{src}#{opts}",
-            :user => node[:rbenv][:user],
-            :group => node[:rbenv][:group],
+            "#{gem_binary_path} install #{name} -q --no-rdoc --no-ri #{version_option} #{src}#{opts}",
+            :user => 'rbenv',
+            :group => 'rbenv',
             :env => {
               'RBENV_VERSION' => @new_resource.ruby_version
             }
