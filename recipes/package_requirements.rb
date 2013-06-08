@@ -4,7 +4,7 @@ include_recipe "git"
 
 # TODO: have tested on ubuntu. have left others as is
 case node[:platform]
-when "redhat", "centos"
+when "redhat", "centos", "amazon"
   # TODO: add as per "rvm requirements"
   package "openssl-devel"
   package "zlib-devel"
@@ -52,4 +52,6 @@ when "ubuntu", "debian"
 
   # for installing some old plugin
   # package "subversion"
+else
+  Chef::Log.warn "No installing dependencies for #{node[:platform]} before building 'rbenv'"
 end
