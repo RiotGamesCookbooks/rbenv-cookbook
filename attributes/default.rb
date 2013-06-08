@@ -24,8 +24,28 @@ default[:rbenv][:git_repository]      = "git://github.com/sstephenson/rbenv.git"
 default[:rbenv][:git_revision]        = "master"
 default[:rbenv][:install_prefix]      = "/opt"
 
+# This can be `git` or `file`. If git, rbenv is installed from GitHub 
+# like a standard install. If `file`, it is installed by using a file
+# from the cookbook. See node[:rbenv][:filename] below
+default[:rbenv][:install_method] = "git"
+
+# Path to rbenv tar.gz file. Assumed to have an name in the form
+# `rbenv-version.tar.gz` which contains a directory
+# `rbenv-master`. This is based on what you get when you download
+# the master branch as a tarball from GitHub
+default[:rbenv][:filename]       = nil
+default[:rbenv][:cookbook]       = nil
+
 default[:ruby_build][:git_repository] = "git://github.com/sstephenson/ruby-build.git"
 default[:ruby_build][:git_revision]   = "master"
+
+# See node[:rbenv][:install_method] above
+default[:ruby_build][:install_method] = "git"
+# Path to ruby-build tar.gz file. Assumed to have an name in the form
+# `ruby-build-version.tar.gz` which contains a directory
+# `ruby-build-version`.
+default[:ruby_build][:filename]       = nil
+default[:ruby_build][:cookbook]       = nil
 
 default[:rbenv_vars][:git_repository] = "git://github.com/sstephenson/rbenv-vars.git"
 default[:rbenv_vars][:git_revision]   = "master"

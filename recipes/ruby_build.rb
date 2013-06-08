@@ -21,14 +21,41 @@
 
 include_recipe "git"
 
-git "#{Chef::Config[:file_cache_path]}/ruby-build" do
-  repository node[:ruby_build][:git_repository]
-  reference node[:ruby_build][:git_revision]
-  action :sync
+Chef::Log.info("Installing ruby-build using #{node[:ruby_build][:install_method]}")
+case node[:ruby_build][:install_method]
+when "git"
+
+  ruby_build_dir = "#{Chef::Config[:file_cache_path]}/ruby-build" 
+  git ruby_build_dir do
+    repository node[:ruby_build][:git_repository]
+    reference node[:ruby_build][:git_revision]
+    action :sync
+  end
+when "file"
+
+  cookbook_file node[:ruby_build][:filename] do
+    mode 0644
+    cookbook node[:rbenv][:cookbook]
+    path File.join(Chef::Config[:file_cache_path], node[:ruby_build][:filename])
+  end
+
+  ruby_build_file = node[:ruby_build][:filename]
+  ruby_build_version = File.basename(ruby_build_file, ".tar.gz")
+  ruby_build_dir = File.join(Chef::Config[:file_cache_path], ruby_build_version)
+
+  extract_command = "tar xzf #{ruby_build_file}"
+  Chef::Log.debug("Extracting ruby_build with command: #{extract_command}")
+  bash "extract_ruby_build" do
+    cwd Chef::Config[:file_cache_path]
+    code extract_command
+  end
+else
+  Chef::Log.error("Invalid install method for ruby-build: #{node[:ruby_build][:install_method]}")
+  raise "Invalid install method: #{node[:ruby_build][:install_method]}"
 end
 
 bash "install_ruby_build" do
-  cwd "#{Chef::Config[:file_cache_path]}/ruby-build"
+  cwd ruby_build_dir
   user "rbenv"
   group "rbenv"
   code <<-EOH
