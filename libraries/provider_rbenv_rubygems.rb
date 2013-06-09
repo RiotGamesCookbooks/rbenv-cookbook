@@ -51,7 +51,7 @@ class Chef
         def install_package(name, version)
           install_via_gem_command(name, version)
           rbenv_command("rehash")
-          
+
           true
         end
 
@@ -64,9 +64,9 @@ class Chef
         def install_via_gem_command(name, version)
           src = @new_resource.source && "  --source=#{@new_resource.source} --source=http://rubygems.org"
           shell_out!(
-            "#{gem_binary_path} install #{name} -q --no-rdoc --no-ri -v \"#{version}\"#{src}#{opts}", 
-            :user => 'rbenv',
-            :group => 'rbenv',
+            "#{gem_binary_path} install #{name} -q --no-rdoc --no-ri -v \"#{version}\"#{src}#{opts}",
+            :user => node[:rbenv][:user],
+            :group => node[:rbenv][:group],
             :env => {
               'RBENV_VERSION' => @new_resource.ruby_version
             }

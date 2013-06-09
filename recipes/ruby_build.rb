@@ -29,8 +29,8 @@ end
 
 bash "install_ruby_build" do
   cwd "#{Chef::Config[:file_cache_path]}/ruby-build"
-  user "rbenv"
-  group "rbenv"
+  user node[:rbenv][:user]
+  group node[:rbenv][:group]
   code <<-EOH
     ./install.sh
   EOH
