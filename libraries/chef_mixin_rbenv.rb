@@ -36,8 +36,8 @@ class Chef
         end
 
         default_options = {
-          :user => 'rbenv',
-          :group => 'rbenv',
+          :user => node[:rbenv][:user],
+          :group => node[:rbenv][:group],
           :cwd => rbenv_root,
           :env => {
             'RBENV_ROOT' => rbenv_root

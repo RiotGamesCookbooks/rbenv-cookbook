@@ -25,27 +25,27 @@ node.set[:ruby_build][:bin_path] = rbenv_binary_path
 
 include_recipe "rbenv::package_requirements"
 
-group "rbenv" do
+group node[:rbenv][:group] do
   members node[:rbenv][:group_users] if node[:rbenv][:group_users]
 end
 
-user "rbenv" do
+user node[:rbenv][:user] do
   shell "/bin/bash"
-  group "rbenv"
-  supports :manage_home => true
+  group node[:rbenv][:group]
+  supports :manage_home => node[:rbenv][:manage_home]
 end
 
 directory node[:rbenv][:root] do
-  owner "rbenv"
-  group "rbenv"
+  owner node[:rbenv][:user]
+  group node[:rbenv][:group]
   mode "0775"
 end
 
 git node[:rbenv][:root] do
   repository node[:rbenv][:git_repository]
   reference node[:rbenv][:git_revision]
-  user "rbenv"
-  group "rbenv"
+  user node[:rbenv][:user]
+  group node[:rbenv][:group]
   action :sync
 
   notifies :create, "template[/etc/profile.d/rbenv.sh]", :immediately
@@ -76,8 +76,8 @@ end
 # check https://github.com/sstephenson/rbenv/blob/master/libexec/rbenv-init#L71
 %w{shims versions plugins}.each do |dir_name|
   directory "#{node[:rbenv][:root]}/#{dir_name}" do
-    owner "rbenv"
-    group "rbenv"
+    owner node[:rbenv][:user]
+    group node[:rbenv][:group]
     mode "0775"
     action [:create]
   end
