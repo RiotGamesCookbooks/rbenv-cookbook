@@ -56,7 +56,8 @@ template "/etc/profile.d/rbenv.sh" do
   mode "0644"
   variables(
     :rbenv_root => node[:rbenv][:root],
-    :ruby_build_bin_path => node[:ruby_build][:bin_path]
+    :ruby_build_bin_path => node[:ruby_build][:bin_path],
+    :rbenv_completions_ext => node[:rbenv][:completions_ext]
   )
 
   notifies :create, "ruby_block[initialize_rbenv]", :immediately
