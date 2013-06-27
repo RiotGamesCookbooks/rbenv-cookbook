@@ -21,19 +21,10 @@
 
 include_recipe "git"
 
-git "#{Chef::Config[:file_cache_path]}/ruby-build" do
+plugin_path = "#{node[:rbenv][:root]}/plugins/ruby_build"
+
+git plugin_path do
   repository node[:ruby_build][:git_repository]
   reference node[:ruby_build][:git_revision]
   action :sync
-end
-
-bash "install_ruby_build" do
-  cwd "#{Chef::Config[:file_cache_path]}/ruby-build"
-  user node[:rbenv][:user]
-  group node[:rbenv][:group]
-  code <<-EOH
-    ./install.sh
-  EOH
-  environment 'PREFIX' => node[:ruby_build][:prefix]
-  not_if { desired_ruby_build_version? }
 end
