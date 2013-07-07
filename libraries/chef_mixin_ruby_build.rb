@@ -28,7 +28,7 @@ class Chef
         "#{node[:ruby_build][:prefix]}/bin/ruby-build"
       end
 
-      def ruby_build_installed_verison
+      def ruby_build_installed_version
         out = shell_out("#{ruby_build_binary_path} --version", :env => nil)
         out.stdout.chomp
       end
