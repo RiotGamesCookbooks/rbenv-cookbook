@@ -27,4 +27,6 @@ git plugin_path do
   repository node[:rbenv_vars][:git_repository]
   reference  node[:rbenv_vars][:git_revision]
   action :sync
+  user node[:rbenv][:user]
+  group node[:rbenv][:group]
 end

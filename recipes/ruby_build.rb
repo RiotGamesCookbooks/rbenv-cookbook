@@ -27,4 +27,6 @@ git plugin_path do
   repository node[:ruby_build][:git_repository]
   reference node[:ruby_build][:git_revision]
   action :sync
+  user node[:rbenv][:user]
+  group node[:rbenv][:group]
 end
