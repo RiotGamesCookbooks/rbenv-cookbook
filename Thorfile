@@ -4,7 +4,6 @@ require 'bundler'
 require 'bundler/setup'
 require 'thor/foodcritic'
 require 'berkshelf/thor'
-require 'chef/cookbook/metadata'
 
 class Default < Thor
   attr_reader :cookbook_name
@@ -16,15 +15,15 @@ class Default < Thor
     super(*args)
   end
 
-  class_option :verbose, 
-    :type => :boolean, 
-    :aliases => "-v", 
+  class_option :verbose,
+    :type => :boolean,
+    :aliases => "-v",
     :default => false
 
-  method_option :knife_config, 
-    :type => :string, 
-    :aliases => "-c", 
-    :desc => "Path to your knife configuration file", 
+  method_option :knife_config,
+    :type => :string,
+    :aliases => "-c",
+    :desc => "Path to your knife configuration file",
     :default => "~/.chef/knife.rb"
   desc "release", "Create a tag from the version specific in the metadata.rb and push to the community site"
   def release
@@ -35,9 +34,7 @@ class Default < Thor
 
     invoke :'foodcritic:lint'
 
-    tag_version {
-      publish_cookbook(options)
-    }
+    tag_version { publish_cookbook(options) }
   end
 
   private
@@ -47,9 +44,7 @@ class Default < Thor
     end
 
     def current_version
-      metadata = Chef::Cookbook::Metadata.new
-      metadata.from_file(source_root.join("metadata.rb").to_s)
-      metadata.version
+      Berkshelf::CachedCookbook.from_path(source_root).version
     end
 
     def publish_cookbook(options)
