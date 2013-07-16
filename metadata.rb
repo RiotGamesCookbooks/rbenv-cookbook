@@ -14,7 +14,7 @@ recipe "rbenv::rbenv_vars", "Installs an rbenv plugin rbenv-vars that lets you s
   supports os
 end
 
-%w{ git build-essential }.each do |cb|
+%w{ git build-essential apt }.each do |cb|
   depends cb
 end
 
