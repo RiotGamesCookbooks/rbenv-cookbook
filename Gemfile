@@ -5,5 +5,4 @@ gem 'thor-foodcritic'
 
 group :development do
   gem 'thor'
-  gem 'chef'
 end
