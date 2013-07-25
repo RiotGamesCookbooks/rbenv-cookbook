@@ -21,9 +21,7 @@
 
 include_recipe "git"
 
-plugin_path = "#{node[:rbenv][:root]}/plugins/ruby_build"
-
-git plugin_path do
+git node[:ruby_build][:prefix] do
   repository node[:ruby_build][:git_repository]
   reference node[:ruby_build][:git_revision]
   action :sync
