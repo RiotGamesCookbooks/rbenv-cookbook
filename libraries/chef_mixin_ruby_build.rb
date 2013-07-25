@@ -25,7 +25,7 @@ class Chef
   module Mixin
     module RubyBuild
       def ruby_build_binary_path
-        "#{node[:ruby_build][:prefix]}/bin/ruby-build"
+        "#{node[:ruby_build][:bin_path]}/ruby-build"
       end
 
       def ruby_build_installed_version
