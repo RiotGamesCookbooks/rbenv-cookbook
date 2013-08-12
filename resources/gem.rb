@@ -25,8 +25,10 @@ attribute :package_name,    :kind_of => String, :name_attribute => true
 attribute :ruby_version,    :kind_of => String
 attribute :version,         :kind_of => String
 attribute :source,          :kind_of => String
+attribute :local_file,      :default => nil
 attribute :gem_binary,      :kind_of => String
 attribute :response_file,   :kind_of => String
+attribute :force,           :default => false
 attribute :options,         :kind_of => Hash
 
 def initialize(*args)

@@ -60,13 +60,28 @@ class Chef
 
           true
         end
+        
+        def has_remote_source?
+          @new_resource.source && !@new_resource.local_file
+        end
+        
+        def source_text
+          "  --source=#{ @new_resource.source } --source=http://rubygems.org"
+        end
+        
+        def version_option(version=nil)
+          (version.nil? || version.empty?) ? "" : " -v \"#{version}\""
+        end
+
+        def force_option
+          " -f" if @new_resource.force 
+        end
 
         def install_via_gem_command(name, version = nil)
-          src            = @new_resource.source && "  --source=#{@new_resource.source} --source=http://rubygems.org"
-          version_option = (version.nil? || version.empty?) ? "" : " -v \"#{version}\""
+          src            =  source_text if has_remote_source?
 
           shell_out!(
-            "#{gem_binary_path} install #{name} -q --no-rdoc --no-ri #{version_option} #{src}#{opts}",
+            "#{gem_binary_path} install #{name} -q --no-rdoc --no-ri #{version_option(version)} #{src}#{force_option}#{opts}",
             :user => node[:rbenv][:user],
             :group => node[:rbenv][:group],
             :env => {
