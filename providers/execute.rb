@@ -5,8 +5,6 @@
 # Author:: Jamie Winsor (<jamie@vialstudios.com>)
 #
 
-use_inline_resources
-
 include Chef::Mixin::Rbenv
 
 action :run do
@@ -27,6 +25,8 @@ action :run do
     user        new_resource.user
     umask       new_resource.user
   end
+
+  new_resource.updated_by_last_action(true)
 end
 
 private
