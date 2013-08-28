@@ -138,6 +138,32 @@ options       | Additional options to the underlying gem command   |
       ruby_version "1.9.2-p290"
     end
 
+## rbenv_execute
+
+Safely execute shell commands with RBENV and a particular Ruby activated
+
+### Actions
+
+Action | Description     | Default
+-------|-------------    |---------
+run    | Run the command | Yes
+
+### Attributes
+
+Attribute    | Description
+----------   |------------
+command      | The name of the command to be executed
+creates      | Indicates that a command to create a file will not be run when that file already exists
+cwd          | The current working directory from which a command is run
+environment  | A hash of environment variables. These will be automatically merged with the required RBENV environment variables
+group        | The group name or group ID that must be changed before running a command
+path         | An array of paths to use when searching for a command. These paths will be added to the command's environment `$PATH` and the required RBENV path variables
+returns      | The return value for a command. This may be an array of accepted values. An exception is raised when the return value(s) do not match
+ruby_version | The version of Ruby to activate when running the command
+timeout      | The amount of time (in seconds) a command will wait before timing out
+user         | The user name or user ID that should be changed before running a command
+umask        | The file mode creation mask, or umask
+
 # Releasing
 
 1. Install the prerequisite gems
