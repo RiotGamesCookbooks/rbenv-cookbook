@@ -8,11 +8,10 @@
 use_inline_resources
 
 action :run do
-  @path        = [ shims_path, bin_path ] + (new_resource.path || Array.new) + system_path
-  @environment = (new_resource.environment || Hash.new).merge(
-    "RBENV_ROOT"    => root_path,
-    "RBENV_VERSION" => new_resource.rbenv_version
-  )
+  @path                         = [ shims_path, bin_path ] + (new_resource.path || Array.new) + system_path
+  @environment                  = new_resource.environment || Hash.new
+  @environment["RBENV_ROOT"]    = root_path
+  @environment["RBENV_VERSION"] = new_resource.rbenv_version if new_resource.ruby_version
 
   execute new_resource.name do
     command     new_resource.command

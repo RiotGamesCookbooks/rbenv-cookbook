@@ -18,4 +18,4 @@ attribute :returns, kind_of: [Integer, Array]
 attribute :timeout, kind_of: Integer
 attribute :umask, kind_of: [String, Integer]
 attribute :user, kind_of: [String, Integer]
-attribute :rbenv_version, kind_of: String, required: true
+attribute :rbenv_version, kind_of: String
