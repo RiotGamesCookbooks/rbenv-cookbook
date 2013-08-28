@@ -7,10 +7,12 @@
 
 use_inline_resources
 
+include Chef::Mixin::Rbenv
+
 action :run do
-  @path                         = [ shims_path, bin_path ] + (new_resource.path || Array.new) + system_path
+  @path                         = [ rbenv_shims_path, rbenv_bin_path ] + (new_resource.path || Array.new) + system_path
   @environment                  = new_resource.environment || Hash.new
-  @environment["RBENV_ROOT"]    = root_path
+  @environment["RBENV_ROOT"]    = rbenv_root_path
   @environment["RBENV_VERSION"] = new_resource.ruby_version if new_resource.ruby_version
 
   execute new_resource.name do
@@ -28,18 +30,6 @@ action :run do
 end
 
 private
-
-  def bin_path
-    ::File.join(root_path, "bin")
-  end
-
-  def shims_path
-    ::File.join(root_path, "shims")
-  end
-
-  def root_path
-    "#{node[:rbenv][:install_prefix]}/rbenv"
-  end
 
   def system_path
     shell_out!("echo $PATH").stdout.chomp.split(':')
