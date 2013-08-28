@@ -19,13 +19,9 @@
 # limitations under the License.
 #
 
-class Chef
-  module Mixin
-    module Rbenv
-      # stub to satisfy RbenvRubygems (library load order not guaranteed)
-    end
-  end
+require_relative 'chef_mixin_rbenv'
 
+class Chef
   class Provider
     class Package
       class RbenvRubygems < Chef::Provider::Package::Rubygems
@@ -33,10 +29,21 @@ class Chef
 
         class RbenvGemEnvironment < AlternateGemEnvironment
           attr_reader :ruby_version
+          attr_reader :rbenv_root
 
-          def initialize(gem_binary_path, ruby_version)
+          def initialize(gem_binary_path, ruby_version, rbenv_root)
             @ruby_version = ruby_version
+            @rbenv_root   = rbenv_root
             super(gem_binary_path)
+          end
+
+          def shell_out!(*args)
+            options = args.last.is_a?(Hash) ? args.pop : Hash.new
+            options.merge!(env: {
+              "RBENV_ROOT" => rbenv_root,
+              "RUBY_VERSION" => ruby_version,
+            })
+            super(*args, options)
           end
         end
 
@@ -45,7 +52,8 @@ class Chef
         def initialize(new_resource, run_context = nil)
           super
           @gem_binary_path = gem_binary_path_for(new_resource.ruby_version)
-          @gem_env = RbenvGemEnvironment.new(gem_binary_path, new_resource.ruby_version)
+          @rbenv_root      = node[:rbenv][:root_path]
+          @gem_env         = RbenvGemEnvironment.new(gem_binary_path, new_resource.ruby_version, @rbenv_root)
         end
 
         def install_package(name, version)
@@ -70,7 +78,8 @@ class Chef
             :user => node[:rbenv][:user],
             :group => node[:rbenv][:group],
             :env => {
-              'RBENV_VERSION' => @new_resource.ruby_version
+              'RBENV_VERSION' => @new_resource.ruby_version,
+              'RBENV_ROOT'    => @rbenv_root
             }
           )
         end
