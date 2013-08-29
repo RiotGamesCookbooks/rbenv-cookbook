@@ -25,7 +25,7 @@ class Chef
       # stub to satisfy RecipeExt (library load order not guaranteed)
     end
   end
-  
+
   module Rbenv
     module RecipeExt
       include Chef::Mixin::Rbenv

@@ -29,22 +29,33 @@ class Chef
 
         class RbenvGemEnvironment < AlternateGemEnvironment
           attr_reader :ruby_version
-          attr_reader :rbenv_root
+          attr_reader :rbenv_root_path
+
+          alias_method :original_shell_out!, :shell_out!
+
+          include Chef::Mixin::Rbenv
 
           def initialize(gem_binary_path, ruby_version, rbenv_root)
-            @ruby_version = ruby_version
-            @rbenv_root   = rbenv_root
+            @ruby_version    = ruby_version
+            @rbenv_root_path = rbenv_root
             super(gem_binary_path)
           end
 
           def shell_out!(*args)
             options = args.last.is_a?(Hash) ? args.pop : Hash.new
             options.merge!(env: {
-              "RBENV_ROOT" => rbenv_root,
+              "RBENV_ROOT"   => rbenv_root_path,
               "RUBY_VERSION" => ruby_version,
+              "PATH"         => ([ rbenv_shims_path, rbenv_bin_path ] + system_path).join(':')
             })
-            super(*args, options)
+            original_shell_out!(*args, options)
           end
+
+          private
+
+            def system_path
+              original_shell_out!("echo $PATH").stdout.chomp.split(':')
+            end
         end
 
         attr_reader :gem_binary_path
