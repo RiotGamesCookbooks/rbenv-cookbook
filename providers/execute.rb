@@ -18,6 +18,8 @@ def load_current_resource
 end
 
 action :run do
+  execute "eval \"$(rbenv init -)\""
+
   exec_resource = execute new_resource.name do
     command     new_resource.command
     creates     new_resource.creates
