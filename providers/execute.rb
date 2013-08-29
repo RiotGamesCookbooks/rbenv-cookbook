@@ -7,19 +7,24 @@
 
 include Chef::Mixin::Rbenv
 
-action :run do
-  @path                         = [ rbenv_shims_path, rbenv_bin_path ] + (new_resource.path || Array.new) + system_path
-  @environment                  = new_resource.environment || Hash.new
+def load_current_resource
+  @path                         = [ rbenv_shims_path, rbenv_bin_path ] + new_resource.path + system_path
+  @environment                  = new_resource.environment
   @environment["RBENV_ROOT"]    = rbenv_root_path
   @environment["RBENV_VERSION"] = new_resource.ruby_version if new_resource.ruby_version
 
-  execute new_resource.name do
+  new_resource.path(@path)
+  new_resource.environment(@environment)
+end
+
+action :run do
+  exec_resource = execute new_resource.name do
     command     new_resource.command
     creates     new_resource.creates
     cwd         new_resource.cwd
-    environment @environment
+    environment new_resource.environment
     group       new_resource.group
-    path        @path
+    path        new_resource.path
     returns     new_resource.returns
     timeout     new_resource.timeout
     user        new_resource.user
