@@ -31,7 +31,7 @@ attribute :options,         :kind_of => Hash
 
 def initialize(*args)
   super
-  @action = :install
+  @action        = :install
   @resource_name = :rbenv_gem
-  @provider = Chef::Provider::Package::RbenvRubygems
+  @provider      = Chef::Provider::Package::RbenvRubygems
 end
