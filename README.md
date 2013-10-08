@@ -23,11 +23,13 @@ To install rbenv and ruby_build; Include each recipe in one of your cookbook's r
     include_recipe "rbenv::default"
     include_recipe "rbenv::ruby_build"
 
-## Installing rbenv-vars
+## Installing rbenv-vars and/or rbenv-bundler
 
-To install rbenv-vars; Include this recipe in one of your cookbook's recipes
+To install rbenv-vars and/or rbenv-bundler; Include this recipe in one of your cookbook's recipes
 
     include_recipe "rbenv::rbenv_vars"
+
+    include_recipe "rbenv::rbenv_bundler"
 
 ## Installing a Ruby
 
