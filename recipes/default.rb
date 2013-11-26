@@ -88,14 +88,18 @@ directory node[:rbenv][:root] do
   mode "0775"
 end
 
-git node[:rbenv][:root] do
-  repository node[:rbenv][:git_repository]
-  reference node[:rbenv][:git_revision]
-  user node[:rbenv][:user]
-  group node[:rbenv][:group]
-  action :sync
+with_home_for_user(node[:rbenv][:user]) do
 
-  notifies :create, "template[/etc/profile.d/rbenv.sh]", :immediately
+  git node[:rbenv][:root] do
+    repository node[:rbenv][:git_repository]
+    reference node[:rbenv][:git_revision]
+    user node[:rbenv][:user]
+    group node[:rbenv][:group]
+    action :sync
+
+    notifies :create, "template[/etc/profile.d/rbenv.sh]", :immediately
+  end
+
 end
 
 template "/etc/profile.d/rbenv.sh" do
