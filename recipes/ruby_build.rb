@@ -31,4 +31,18 @@ with_home_for_user(node[:rbenv][:user]) do
     group node[:rbenv][:group]
   end
 
+  node[:ruby_build][:rubies].each { |rubie| rbenv_ruby rubie }
+
+  if node[:rbenv][:global]
+    rbenv_ruby node[:rbenv][:global] { global true }
+   
+    node[:rbenv][:global_gems].each do |gem|
+      rbenv_gem gem[:name] do
+        version gem[:version]
+        options gem[:options]
+        ruby_version node[:rbenv][:global]
+      end
+    end
+  end
+
 end

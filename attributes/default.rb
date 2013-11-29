@@ -27,9 +27,12 @@ default[:rbenv][:git_repository] = "https://github.com/sstephenson/rbenv.git"
 default[:rbenv][:git_revision]   = "master"
 default[:rbenv][:install_prefix] = "/opt"
 default[:rbenv][:root_path]      = "#{node[:rbenv][:install_prefix]}/rbenv"
+default[:rbenv][:global]         = nil
+default[:rbenv][:global_gems]    = Array.new
 
 default[:ruby_build][:git_repository] = "https://github.com/sstephenson/ruby-build.git"
 default[:ruby_build][:git_revision]   = "master"
+default[:ruby_build][:rubies]         = Array.new
 
 default[:rbenv_vars][:git_repository] = "https://github.com/sstephenson/rbenv-vars.git"
 default[:rbenv_vars][:git_revision]   = "master"
