@@ -82,12 +82,14 @@ user node[:rbenv][:user] do
   shell "/bin/bash"
   group node[:rbenv][:group]
   supports :manage_home => node[:rbenv][:manage_home]
+  home node[:rbenv][:user_home]
 end
 
 directory node[:rbenv][:root] do
   owner node[:rbenv][:user]
   group node[:rbenv][:group]
   mode "0775"
+  recursive true
 end
 
 with_home_for_user(node[:rbenv][:user]) do
