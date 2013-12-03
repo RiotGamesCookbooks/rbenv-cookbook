@@ -90,7 +90,7 @@ class Chef
       end
 
       def rbenv_root_path
-        "#{node[:rbenv][:install_prefix]}/rbenv"
+        node[:rbenv][:root_path]
       end
 
       # Ensures $HOME is temporarily set to the given user. The original
