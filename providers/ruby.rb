@@ -26,10 +26,11 @@ action :install do
     Chef::Log.debug "rbenv_ruby[#{new_resource.name}] is already installed so skipping"
   else
     Chef::Log.info "rbenv_ruby[#{new_resource.name}] is building, this may take a while..."
+    verbose = "--verbose" if node[:rbenv][:install_verbose]
 
     start_time = Time.now
 
-    out = rbenv_command("install #{new_resource.name}")
+    out = rbenv_command("install #{new_resource.name} #{verbose}")
 
     unless out.exitstatus == 0
       raise Chef::Exceptions::ShellCommandFailed, "\n" + out.format_for_exception
