@@ -88,7 +88,7 @@ end
 directory node[:rbenv][:root] do
   owner node[:rbenv][:user]
   group node[:rbenv][:group]
-  mode "0775"
+  mode "2775"
   recursive true
 end
 
@@ -133,7 +133,7 @@ end
   directory "#{node[:rbenv][:root]}/#{dir_name}" do
     owner node[:rbenv][:user]
     group node[:rbenv][:group]
-    mode "0775"
+    mode "2775"
     action [:create]
   end
 end
