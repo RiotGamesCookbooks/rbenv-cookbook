@@ -34,3 +34,6 @@ default[:ruby_build][:git_revision]   = "master"
 
 default[:rbenv_vars][:git_repository] = "https://github.com/sstephenson/rbenv-vars.git"
 default[:rbenv_vars][:git_revision]   = "master"
+
+default[:rbenv_binstubs][:git_repository] = "https://github.com/ianheggie/rbenv-binstubs.git"
+default[:rbenv_binstubs][:git_revision]   = "master"
