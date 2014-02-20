@@ -57,6 +57,14 @@ class Chef
         out.exitstatus == 0
       end
 
+      def rbenv_local_version(cwd)
+        out = rbenv_command("local", :cwd => cwd || rbenv_bin_path)
+        unless out.exitstatus == 0
+          raise Chef::Exceptions::ShellCommandFailed, "\n" + out.format_for_exception
+        end
+        out.stdout.chomp
+      end
+
       def rbenv_global_version?(version)
         out = rbenv_command("global")
         unless out.exitstatus == 0

@@ -92,6 +92,7 @@ Attribute    | Description                                                 | Def
 ruby_version | the ruby version and patch level you wish to install        | name
 force        | install even if this version is already present (reinstall) | false
 global       | set this ruby version as the global version                 | false
+cwd          | if ruby_version is 'local', use this directory              |
 
 ### Examples
 
