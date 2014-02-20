@@ -22,14 +22,18 @@
 include Chef::Mixin::Rbenv
 
 action :install do
-  if !new_resource.force && ruby_version_installed?(new_resource.name)
+  version = new_resource.ruby_version || version
+  if version == 'local'
+    version = rbenv_local_version(new_resource.cwd)
+  end
+  if !new_resource.force && ruby_version_installed?(version)
     Chef::Log.debug "rbenv_ruby[#{new_resource.name}] is already installed so skipping"
   else
     Chef::Log.info "rbenv_ruby[#{new_resource.name}] is building, this may take a while..."
 
     start_time = Time.now
 
-    out = rbenv_command("install #{new_resource.name}")
+    out = rbenv_command("install #{version}")
 
     unless out.exitstatus == 0
       raise Chef::Exceptions::ShellCommandFailed, "\n" + out.format_for_exception
@@ -44,16 +48,16 @@ action :install do
     }
 
     unless Chef::Platform.windows?
-      shell_out("chmod -R 0775 versions/#{new_resource.name}", chmod_options)
-      shell_out("find versions/#{new_resource.name} -type d -exec chmod +s {} \\;", chmod_options)
+      shell_out("chmod -R 0775 versions/#{version}", chmod_options)
+      shell_out("find versions/#{version} -type d -exec chmod +s {} \\;", chmod_options)
     end
 
     new_resource.updated_by_last_action(true)
   end
 
-  if new_resource.global && !rbenv_global_version?(new_resource.name)
-    Chef::Log.info "Setting #{new_resource.name} as the rbenv global version"
-    out = rbenv_command("global #{new_resource.name}")
+  if new_resource.global && !rbenv_global_version?(version)
+    Chef::Log.info "Setting #{version} as the rbenv global version"
+    out = rbenv_command("global #{version}")
     unless out.exitstatus == 0
       raise Chef::Exceptions::ShellCommandFailed, "\n" + out.format_for_exception
     end

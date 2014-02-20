@@ -24,6 +24,7 @@ actions :install
 attribute :ruby_version, :kind_of => String, :name_attribute => true
 attribute :force,        :default => false
 attribute :global,       :default => false
+attribute :cwd
 
 def initialize(*args)
   super
