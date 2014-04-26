@@ -92,6 +92,9 @@ Attribute    | Description                                                 | Def
 ruby_version | the ruby version and patch level you wish to install        | name
 force        | install even if this version is already present (reinstall) | false
 global       | set this ruby version as the global version                 | false
+patch        | a url for `rbenv install --patch` to pull in                |
+
+Using the `patch` attribute requires that patchutils is installed, so that it can use filterdiff to remove parts of the patch (the Changelog which usually causes merge conflicts).
 
 ### Examples
 
@@ -105,6 +108,14 @@ global       | set this ruby version as the global version                 | fal
       ruby_version "1.9.3-p0"
       force true
     end
+
+##### Install Ruby 2.1.1 with a patch for ubuntu 14.04 support
+
+    rbenv_ruby "2.1.1" do
+      global true
+      patch "https://bugs.ruby-lang.org/projects/ruby-trunk/repository/revisions/45225/diff?format=diff"
+    end
+
 
 ## rbenv_gem
 
