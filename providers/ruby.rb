@@ -22,7 +22,7 @@
 include Chef::Mixin::Rbenv
 
 action :install do
-  resource_descriptor = "rbenv_ruby[#{new_resource.name}] (version #{new_resource.ruby_version}"
+  resource_descriptor = "rbenv_ruby[#{new_resource.name}] (version #{new_resource.ruby_version})"
   if !new_resource.force && ruby_version_installed?(new_resource.ruby_version)
     Chef::Log.debug "#{resource_descriptor} is already installed so skipping"
   else
