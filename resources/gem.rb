@@ -27,7 +27,7 @@ attribute :version,         :kind_of => String
 attribute :source,          :kind_of => String
 attribute :gem_binary,      :kind_of => String
 attribute :response_file,   :kind_of => String
-attribute :options,         :kind_of => Hash
+attribute :options,         :kind_of => [String, Hash]
 
 def initialize(*args)
   super
