@@ -21,7 +21,8 @@
 
 include_recipe "ohai"
 
-bin_path = rbenv_binary_path
+bin_path = ::File.join(rbenv_bin_path, "rbenv")
+
 template "#{node[:ohai][:plugin_path]}/rbenv.rb" do
   source 'plugins/rbenv.rb.erb'
   owner 'root'
