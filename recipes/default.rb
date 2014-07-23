@@ -106,6 +106,8 @@ with_home_for_user(node[:rbenv][:user]) do
 
 end
 
+include_recipe "rbenv::hotfix_smartos" if node[:platform] == 'smartos'
+
 template "/etc/profile.d/rbenv.sh" do
   source "rbenv.sh.erb"
   mode "0644"

@@ -1,10 +1,10 @@
 #
 # Cookbook Name:: rbenv
-# Resource:: ruby
+# Recipe:: hotfix_smartos
 #
-# Author:: Jamie Winsor (<jamie@vialstudios.com>)
+# Author:: SAWANOBORI Yukihiko (<sawanoboriyu@higanworks.com>)
 #
-# Copyright 2011-2012, Riot Games
+# Copyright 2011-2014, HiganWorks LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,15 +19,14 @@
 # limitations under the License.
 #
 
-actions :install
+directory '/etc/profile.d' do
+  action :create
+end
 
-attribute :ruby_version, :kind_of => String, :name_attribute => true
-attribute :force,        :default => false
-attribute :global,       :default => false
-attribute :patch,        :default => nil
-attribute :config_opts,  :kind_of => Array, :default => []
-
-def initialize(*args)
-  super
-  @action = :install
+ruby_block 'edit_profile_for_smartos' do
+  block do
+    _file = Chef::Util::FileEdit.new('/etc/profile')
+    _file.insert_line_if_no_match('Appends by rbenv cookbook', "## Appends by rbenv cookbook\nif [ -d /etc/profile.d ]; then\n  for i in /etc/profile.d/*.sh; do\n    if [ -r $i ]; then\n      . $i\n    fi\n  done\n  unset i\nfi\n")
+    _file.write_file
+  end
 end

@@ -28,9 +28,16 @@ action :install do
     Chef::Log.info "rbenv_ruby[#{new_resource.name}] is building, this may take a while..."
 
     start_time = Time.now
+    ruby_configure_opts = {}
+    unless new_resource.config_opts.empty?
+      ruby_configure_opts[:env] = {
+        "RUBY_CONFIGURE_OPTS" => new_resource.config_opts.join(' ')
+      }
+    end
+
     out = new_resource.patch ?
-      rbenv_command("install --patch #{new_resource.name}", patch: new_resource.patch) :
-      rbenv_command("install #{new_resource.name}")
+      rbenv_command("install --patch #{new_resource.name}", {patch: new_resource.patch}.merge(ruby_configure_opts)) :
+      rbenv_command("install #{new_resource.name}", ruby_configure_opts)
 
     unless out.exitstatus == 0
       raise Chef::Exceptions::ShellCommandFailed, "\n" + out.format_for_exception
