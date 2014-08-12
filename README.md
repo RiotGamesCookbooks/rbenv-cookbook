@@ -29,6 +29,12 @@ To install rbenv and ruby_build; Include each recipe in one of your cookbook's r
 To install rbenv-vars; Include this recipe in one of your cookbook's recipes
 
     include_recipe "rbenv::rbenv_vars"
+	
+## Installing rbenv-binstubs
+
+To install rbenv-binstubs; Include this recipe in one of your cookbook's recipes
+
+    include_recipe "rbenv::rbenv_binstubs"	
 
 ## Installing a Ruby
 
@@ -61,6 +67,11 @@ Be sure to include a value for the `ruby_version` attribute so the gem is instal
 * `ruby_build[:git_revision]`   - Revision of the ruby_build repository to checkout
 * `ruby_build[:prefix]`         - Path prefix where ruby_build will be installed to
 
+## rbenv_binstubs
+
+* `rbenv_binstubs[:git_repository]` - Git url of the rbenv-binstubs repository to clone
+* `rbenv_binstubs[:git_revision]`   - Revision of the rbenv-binstubs repository to checkout
+
 # Recipes
 
 ## default
@@ -70,6 +81,10 @@ Configures a node with a system wide rbenv accessible by users in the rbenv grou
 ## ruby_build
 
 Installs ruby_build to a node which enables the `rbenv_ruby` LWRP to install Rubies to the node
+
+## rbenv_binstubs
+
+Installs rbenv-binstubs
 
 ## ohai_plugin
 
