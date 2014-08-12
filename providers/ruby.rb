@@ -28,10 +28,15 @@ action :install do
   else
     Chef::Log.info "#{resource_descriptor} is building, this may take a while..."
 
+    original_env_home = ENV['HOME']
+    ENV['HOME'] = home_directory_for_user(node[:rbenv][:user])
+
     start_time = Time.now
     out = new_resource.patch ?
       rbenv_command("install --patch #{new_resource.ruby_version}", patch: new_resource.patch) :
       rbenv_command("install #{new_resource.ruby_version}")
+
+    ENV['HOME'] = original_env_home
 
     unless out.exitstatus == 0
       raise Chef::Exceptions::ShellCommandFailed, "\n" + out.format_for_exception
