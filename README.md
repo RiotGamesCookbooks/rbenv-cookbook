@@ -30,6 +30,12 @@ To install rbenv-vars; Include this recipe in one of your cookbook's recipes
 
     include_recipe "rbenv::rbenv_vars"
 
+## Installing rbenv-sudo
+
+To install rbenv-sudo; Include this recipe in one of your cookbook's recipes
+
+    include_recipe "rbenv::rbenv_sudo"
+
 ## Installing a Ruby
 
 And now to install a Ruby use the `rbenv_ruby` LWRP
