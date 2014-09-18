@@ -23,10 +23,10 @@ node.set[:rbenv][:root]          = rbenv_root_path
 node.set[:ruby_build][:prefix]   = "#{node[:rbenv][:root]}/plugins/ruby_build"
 node.set[:ruby_build][:bin_path] = "#{node[:ruby_build][:prefix]}/bin"
 
-case node[:platform]
-when "ubuntu", "debian"
-  include_recipe "apt"
-end
+#case node[:platform]
+#when "ubuntu", "debian"
+#  include_recipe "apt"
+#end
 
 include_recipe "build-essential"
 include_recipe "git"
