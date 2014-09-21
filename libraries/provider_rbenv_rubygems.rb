@@ -81,7 +81,11 @@ class Chef
         end
 
         def install_via_gem_command(name, version = nil)
-          src            = @new_resource.source && "  --source=#{@new_resource.source} --source=http://rubygems.org"
+          if @new_resource.source =~ /\.gem$/i
+            name = @new_resource.source
+          else
+            src = @new_resource.source && " --source=#{@new_resource.source} --source=https://rubygems.org"
+          end
           version_option = (version.nil? || version.empty?) ? "" : " -v \"#{version}\""
 
           shell_out!(
