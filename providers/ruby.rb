@@ -29,9 +29,14 @@ action :install do
     Chef::Log.info "#{resource_descriptor} is building, this may take a while..."
 
     start_time = Time.now
+    command = 'install'
+    command << ' --patch' if new_resource.patch
+    command << " #{new_resource.ruby_version}" if new_resource.verbose
+    command << ' --verbose'
+
     out = new_resource.patch ?
-      rbenv_command("install --patch #{new_resource.ruby_version}", patch: new_resource.patch) :
-      rbenv_command("install #{new_resource.ruby_version}")
+      rbenv_command(command, patch: new_resource.patch) :
+      rbenv_command(command)
 
     unless out.exitstatus == 0
       raise Chef::Exceptions::ShellCommandFailed, "\n" + out.format_for_exception
