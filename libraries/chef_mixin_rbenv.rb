@@ -44,15 +44,20 @@ class Chef
           },
           :timeout => 3600
         }
+
+        if flags = options.delete(:flags)
+          configure_opts = "CONFIGURE_OPTS='#{flags}'"
+        end
+
         if patch = options.delete(:patch)
           Chef::Log.info("Patch found at: #{patch}")
           unless filterdiff_installed?
             Chef::Log.error("Cannot find filterdiff. Please install patchutils to be able to use patches.")
             raise "Cannot find filterdiff. Please install patchutils to be able to use patches."
           end
-          shell_out("curl -fsSL #{patch} | filterdiff -x ChangeLog | #{rbenv_bin_path}/rbenv #{cmd}", Chef::Mixin::DeepMerge.deep_merge!(options, default_options))
+          shell_out("curl -fsSL #{patch} | filterdiff -x ChangeLog | #{configure_opts} #{rbenv_bin_path}/rbenv #{cmd}", Chef::Mixin::DeepMerge.deep_merge!(options, default_options))
         else
-          shell_out("#{rbenv_bin_path}/rbenv #{cmd}", Chef::Mixin::DeepMerge.deep_merge!(options, default_options))
+          shell_out("#{configure_opts} #{rbenv_bin_path}/rbenv #{cmd}", Chef::Mixin::DeepMerge.deep_merge!(options, default_options))
         end
       end
 
