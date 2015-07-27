@@ -21,8 +21,7 @@
 
 actions :install
 
-attribute :name, :kind_of => String
-attribute :ruby_version, :kind_of => String
+attribute :ruby_version, :kind_of => String, :name_attribute => true
 attribute :force,        :default => false
 attribute :global,       :default => false
 attribute :patch,        :default => nil
@@ -30,5 +29,4 @@ attribute :patch,        :default => nil
 def initialize(*args)
   super
   @action = :install
-  @ruby_version ||= @name
 end
