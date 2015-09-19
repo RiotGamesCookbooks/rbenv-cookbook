@@ -52,7 +52,11 @@ class Chef
           end
           shell_out("curl -fsSL #{patch} | filterdiff -x ChangeLog | #{rbenv_bin_path}/rbenv #{cmd}", Chef::Mixin::DeepMerge.deep_merge!(options, default_options))
         else
-          shell_out("#{rbenv_bin_path}/rbenv #{cmd}", Chef::Mixin::DeepMerge.deep_merge!(options, default_options))
+          if RUBY_PLATFORM =~ /darwin/
+            shell_out("unset TMPDIR; #{rbenv_bin_path}/rbenv #{cmd}", Chef::Mixin::DeepMerge.deep_merge!(options, default_options))
+          else
+            shell_out("#{rbenv_bin_path}/rbenv #{cmd}", Chef::Mixin::DeepMerge.deep_merge!(options, default_options))
+          end
         end
       end
 
