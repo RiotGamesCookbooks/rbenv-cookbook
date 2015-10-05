@@ -28,6 +28,7 @@ default[:rbenv][:git_revision]   = "master"
 default[:rbenv][:install_prefix] = "/opt"
 default[:rbenv][:root_path]      = "#{node[:rbenv][:install_prefix]}/rbenv"
 default[:rbenv][:user_home]      = "/home/#{node[:rbenv][:user]}"
+default[:rbenv][:user_shell]     = "/bin/bash"
 
 default[:ruby_build][:git_repository] = "https://github.com/sstephenson/ruby-build.git"
 default[:ruby_build][:git_revision]   = "master"

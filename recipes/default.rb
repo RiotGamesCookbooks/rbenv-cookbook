@@ -79,7 +79,7 @@ group node[:rbenv][:group] do
 end
 
 user node[:rbenv][:user] do
-  shell "/bin/bash"
+  shell node[:rbenv][:user_shell]
   group node[:rbenv][:group]
   supports :manage_home => node[:rbenv][:manage_home]
   home node[:rbenv][:user_home]
