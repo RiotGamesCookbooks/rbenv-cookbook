@@ -57,7 +57,7 @@ class Chef
       end
 
       def rbenv_installed?
-        out = shell_out("ls #{rbenv_bin_path}/rbenv")
+        out = shell_out("ls #{rbenv_bin_path}/rbenv/versions/*/bin/ruby")
         out.exitstatus == 0
       end
 
