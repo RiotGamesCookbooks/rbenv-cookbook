@@ -122,25 +122,20 @@ class Chef
 
         time = Time.now.to_i
 
-        ruby_block "set HOME for #{username} at #{time}" do
-          block do
-            ENV['OLD_HOME'] = ENV['HOME']
-            ENV['HOME'] = begin
-              require 'etc'
-              Etc.getpwnam(username).dir
-            rescue ArgumentError # user not found
-              "/home/#{username}"
-            end
-          end
+        Chef::Log.info("set HOME for #{username} at #{time}")
+        ENV['OLD_HOME'] = ENV['HOME']
+        ENV['HOME'] = begin
+          require 'etc'
+          Etc.getpwnam(username).dir
+
+          rescue ArgumentError # user not found
+            "/home/#{username}"
         end
 
         yield
 
-        ruby_block "unset HOME for #{username} #{time}" do
-          block do
-            ENV['HOME'] = ENV['OLD_HOME']
-          end
-        end
+        Chef::Log.info("unset HOME for #{username} #{time}")
+        ENV['HOME'] = ENV['OLD_HOME']
       end
     end
   end
