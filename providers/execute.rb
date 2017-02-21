@@ -29,6 +29,7 @@ action :run do
     cwd         new_resource.cwd
     environment new_resource.environment
     group       new_resource.group
+    live_stream new_resource.live_stream
     returns     new_resource.returns
     timeout     new_resource.timeout
     user        new_resource.user

@@ -13,6 +13,7 @@ attribute :creates, kind_of: String
 attribute :cwd, kind_of: String
 attribute :environment, kind_of: Hash, default: Hash.new
 attribute :group, kind_of: [String, Integer]
+attribute :live_stream, kind_of: Boolean, default: false
 attribute :path, kind_of: Array, default: Array.new
 attribute :returns, kind_of: [Integer, Array]
 attribute :timeout, kind_of: Integer
