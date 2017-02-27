@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-require_relative 'chef_mixin_rbenv'
+require File.join(File.dirname(__FILE__), 'chef_mixin_rbenv')
 
 class Chef
   class Provider
@@ -43,12 +43,12 @@ class Chef
 
           def shell_out!(*args)
             options = args.last.is_a?(Hash) ? args.pop : Hash.new
-            options.merge!(env: {
+            options.merge!(:env => {
               "RBENV_ROOT"    => rbenv_root_path,
               "RBENV_VERSION" => ruby_version,
               "PATH"          => ([ rbenv_shims_path, rbenv_bin_path ] + system_path).join(':')
             })
-            original_shell_out!(*args, options)
+            original_shell_out!(*args.push(options))
           end
 
           private
