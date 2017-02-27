@@ -43,7 +43,7 @@ class Chef
 
           def shell_out!(*args)
             options = args.last.is_a?(Hash) ? args.pop : Hash.new
-            options.merge!(env: {
+            options.merge!(:env => {
               "RBENV_ROOT"    => rbenv_root_path,
               "RBENV_VERSION" => ruby_version,
               "PATH"          => ([ rbenv_shims_path, rbenv_bin_path ] + system_path).join(':')
