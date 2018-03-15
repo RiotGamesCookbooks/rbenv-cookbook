@@ -9,11 +9,13 @@ include Chef::Mixin::Rbenv
 
 def load_current_resource
   @path                         = [ rbenv_shims_path, rbenv_bin_path ] + new_resource.path + system_path
-  @environment                  = new_resource.environment
+  # duplicate because the original one is frozen
+  @environment                  = new_resource.environment.dup
   @environment["PATH"]          = @path.join(":")
   @environment["RBENV_ROOT"]    = rbenv_root_path
   @environment.delete("RBENV_VERSION") if !new_resource.ruby_version
   @environment["RBENV_VERSION"] = new_resource.ruby_version if new_resource.ruby_version
+  @environment["PKG_CONFIG_PATH"] = "/usr/lib/x86_64-linux-gnu/pkgconfig"
 
   new_resource.environment(@environment)
 end
