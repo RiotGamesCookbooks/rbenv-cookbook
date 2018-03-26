@@ -19,9 +19,9 @@
 # limitations under the License.
 #
 
-node.set[:rbenv][:root]          = rbenv_root_path
-node.set[:ruby_build][:prefix]   = "#{node[:rbenv][:root]}/plugins/ruby_build"
-node.set[:ruby_build][:bin_path] = "#{node[:ruby_build][:prefix]}/bin"
+node.normal[:rbenv][:root] = rbenv_root_path
+node.normal[:ruby_build][:prefix] = "#{node[:rbenv][:root]}/plugins/ruby_build"
+node.normal[:ruby_build][:bin_path] = "#{node[:ruby_build][:prefix]}/bin"
 
 case node[:platform]
 when "ubuntu", "debian"
