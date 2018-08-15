@@ -1,11 +1,19 @@
-.vagrant
-Berksfile.lock
-Gemfile.lock
 *~
-*#
-.#*
-\#*#
-.*.sw[a-z]
-*.un~
+*.bak
+*.sw*
+*.lock
+vendor
+.vagrant
 /cookbooks
-.kitchen
+encrypted_data_bag_secret
+
+# Bundler
+bin/*
+.bundle/*
+
+# Kitchen
+.kitchen/
+.kitchen.local.yml
+
+# OSX
+.DS_Store
